@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>げーむん</title>
+
+  <!-- ✅ ドットフォント -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: #000;
+      font-family: "Press Start 2P", monospace;
+      color: white;
+      text-align: center;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    /* ✅ フェード演出 */
+    .screen {
+      display: none;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      opacity: 0;
+      transition: opacity 0.8s;
+    }
+
+    .active {
+      display: flex;
+      opacity: 1;
+    }
+
+    /* ✅ ゲームボーイ風 */
+    .gameboy {
+      background: #cfcfcf;
+      width: 320px;
+      height: 480px;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 0 30px black;
+      animation: pop 1s ease;
+    }
+
+    .display {
+      background: #0f380f;
+      color: #8bac0f;
+      width: 100%;
+      height: 230px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 18px;
+      margin-bottom: 40px;
+    }
+
+    .start-btn {
+      background: #d60000;
+      color: white;
+      border-radius: 50px;
+      padding: 15px 40px;
+      font-size: 18px;
+      border: none;
+      cursor: pointer;
+      animation: blink 1s infinite;
+    }
+
+    /* ✅ ドラクエ風UI */
+    .dq-box {
+      border: 4px solid white;
+      padding: 25px;
+      width: 85%;
+      max-width: 420px;
+      animation: pop 0.8s ease;
+    }
+
+    .dq-title {
+      margin-bottom: 25px;
+      font-size: 20px;
+    }
+
+    .dq-choice {
+      text-align: left;
+      cursor: pointer;
+      margin: 14px 0;
+      transition: 0.2s;
+    }
+
+    .dq-choice:hover {
+      background: white;
+      color: black;
+      transform: translateX(8px);
+    }
+
+    /* ✅ アニメーション */
+    @keyframes blink {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0.3; }
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ✅ ① トップ画面 -->
+<div id="top" class="screen active">
+  <div class="gameboy">
+    <div class="display">げーむん</div>
+    <button class="start-btn" onclick="goMood()">▶ START</button>
+  </div>
+</div>
+
+<!-- ✅ ② 気分選択 -->
+<div id="mood" class="screen">
+  <div class="dq-box">
+    <div class="dq-title">気分は？</div>
+    <div class="dq-choice" onclick="selectMood('ガンガン行こうぜ')">▶ ガンガン行こうぜ</div>
+    <div class="dq-choice" onclick="selectMood('ばっちりがんばれ')">▶ ばっちりがんばれ</div>
+    <div class="dq-choice" onclick="selectMood('いのちだいじに')">▶ いのちだいじに</div>
+    <div class="dq-choice" onclick="selectMood('じゅもんつかうな')">▶ じゅもんつかうな</div>
+    <div class="dq-choice" onclick="selectMood('おれにまかせろ')">▶ おれにまかせろ</div>
+  </div>
+</div>
+
+<!-- ✅ ③ 結果 -->
+<div id="result" class="screen">
+  <div class="dq-box">
+    <div class="dq-title">結果</div>
+    <p>選択した気分：</p>
+    <p id="selectedMood"></p>
+
+    <!-- ✅ Railsから差し替える -->
+    <p id="gameResult">おすすめゲームが表示されます</p>
+
+    <br>
+    <button class="start-btn" onclick="location.reload()">▶ もう一度</button>
+  </div>
+</div>
+
+<script>
+  // ✅ ファミコン風SE（Web Audio API）
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+  function playSE(freq = 800, time = 0.1) {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "square"; // ✅ ファミコンっぽい音
+    osc.frequency.value = freq;
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + time);
+    osc.stop(audioCtx.currentTime + time);
+  }
+
+  function goMood() {
+    playSE(600, 0.15);
+    document.getElementById("top").classList.remove("active");
+    setTimeout(() => {
+      document.getElementById("mood").classList.add("active");
+    }, 400);
+  }
+
+  function selectMood(mood) {
+    playSE(1000, 0.12);
+    document.getElementById("mood").classList.remove("active");
+
+    setTimeout(() => {
+      document.getElementById("result").classList.add("active");
+    }, 400);
+
+    document.getElementById("selectedMood").textContent = mood;
+
+    // ✅ Rails連携部分（ここだけ差し替えればOK！）
+    console.log("Railsに送信:", mood);
+  }
+</script>
+
+</body>
+</html>
