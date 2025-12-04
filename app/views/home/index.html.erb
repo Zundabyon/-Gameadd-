@@ -1,271 +1,268 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>GameAdd</title>
+<meta charset="UTF-8">
+<title>GameAdd</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+body {
+  background:black;
+  margin:0;
+  font-family:"Press Start 2P", monospace;
+  color:white;
+  overflow:hidden;
+}
 
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+.gameboy {
+  width:340px;
+  height:540px;
+  margin:5vh auto;
+  background:#cfcfcf;
+  border-radius:30px;
+  box-shadow: inset 0 0 20px #888,0 0 30px black;
+  padding:20px;
+  position:relative;
+}
 
-  <style>
-    body {
-      background: #000;
-      font-family: "Press Start 2P", monospace;
-      color: white;
-      text-align: center;
-      margin: 0;
-      overflow: hidden;
-    }
+.logo {
+  text-align:center;
+  font-size:18px;
+  color:#ff2b2b;
+  margin-bottom:10px;
+}
 
-    .logo {
-      font-size: 26px;
-      color: #ff2b2b;
-      margin-bottom: 15px;
-      text-shadow: 3px 3px 0 #600;
-    }
+.display {
+  background:#0f380f;
+  color:#8bac0f;
+  width:100%;
+  height:230px;
+  padding:10px;
+  overflow:hidden;
+  box-sizing:border-box;
+}
 
-    .screen {
-      display: none;
-      min-height: 100vh;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      opacity: 0;
-      transition: opacity 0.5s;
-    }
+.buttons {
+  position:absolute;
+  bottom:70px;
+  right:25px;
+  display:flex;
+  gap:18px;
+}
 
-    .active {
-      display: flex;
-      opacity: 1;
-    }
+.btn {
+  background:#a30000;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+  font-size:16px;
+  color:white;
+  cursor:pointer;
+}
 
-    .gameboy {
-      background: #cfcfcf;
-      width: 320px;
-      height: 480px;
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 0 30px black;
-    }
+.dpad {
+  position:absolute;
+  bottom:80px;
+  left:20px;
+  width:90px;
+  height:90px;
+}
 
-    .display {
-      background: #0f380f;
-      color: #8bac0f;
-      width: 100%;
-      height: 230px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 40px;
-    }
-    .readme-body {
-      text-align: left;
-      font-size: 12px;
-      line-height: 1.8;
-      max-height: 250px;
-      overflow-y: auto;
-      margin-bottom: 10px;
-    }
-
-    .gb-item {
-      text-align: left;
-      margin: 10px 0;
-    }
-
-    .gb-item.active {
-      animation: blink 1s infinite;
-    }
-
-    .gb-buttons {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    .btn {
-      background: #a30000;
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-      line-height: 45px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .dq-box {
-      border: 4px solid white;
-      padding: 25px;
-      width: 85%;
-    }
-
-    .dq-choice {
-      text-align: left;
-      margin: 14px 0;
-      cursor: pointer;
-    }
-
-    .back-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-    }
-
-    @keyframes blink {
-      0%, 50%, 100% { opacity: 1; }
-      25%, 75% { opacity: 0.3; }
-    }
-  </style>
+.dpad-btn {
+  position:absolute;
+  background:#444;
+  width:28px;
+  height:28px;
+  border-radius:6px;
+  cursor:pointer;
+}
+.dpad-up{top:0; left:31px;}
+.dpad-down{bottom:0; left:31px;}
+.dpad-left{left:0; top:31px;}
+.dpad-right{right:0; top:31px;}
+</style>
 </head>
-
 <body>
 
-<!-- ✅ トップ画面 -->
-<div id="top" class="screen active">
-  <div class="gameboy">
+<div class="gameboy">
+  <div class="logo">GameAdd</div>
+  <div class="display" id="display"></div>
 
-    <div class="display">
-      <div class="logo">GameAdd</div>
-      <div class="gb-item active">▶ START</div>
-      <div class="gb-item">　OPTION</div>
-    </div>
-
-    <div class="gb-buttons">
-      <div class="btn" id="btnA">A</div>
-    </div>
+  <div class="buttons">
+    <div class="btn" id="btnA">A</div>
+    <div class="btn" id="btnB">B</div>
   </div>
-</div>
 
-<!-- ✅ OPTION画面 -->
-<div id="option" class="screen">
-  <div class="dq-box">
-    <div class="dq-title">📖 GameAdd README</div>
-
-    <div class="readme-body">
-      <p>■ このアプリについて</p>
-      <p>気分に応じてゲームを自動で紹介するアプリです。</p>
-
-      <p>■ 操作方法</p>
-      <p>↑ ↓：カーソル移動</p>
-      <p>A / Enter：決定</p>
-
-      <p>■ 使用技術</p>
-      <p>HTML / CSS / JavaScript / Rails</p>
-
-      <p>■ 制作</p>
-      <p>Runrun</p>
-    </div>
-
-    <button class="back-btn" onclick="goTop()">▶ もどる</button>
-  </div>
-</div>
-
-
-<!-- ✅ 気分選択 -->
-<div id="mood" class="screen">
-  <div class="dq-box">
-    <div class="dq-choice" onclick="selectMood('ガンガン行こうぜ')">▶ ガンガン行こうぜ</div>
-    <div class="dq-choice" onclick="selectMood('いのちだいじに')">▶ いのちだいじに</div>
-    <button class="back-btn" onclick="goTop()">▶ もどる</button>
-  </div>
-</div>
-
-<!-- ✅ 結果 -->
-<div id="result" class="screen">
-  <div class="dq-box">
-    <p id="selectedMood"></p>
-    <button class="back-btn" onclick="goTop(true)">▶ トップへ</button>
+  <div class="dpad">
+    <div class="dpad-btn dpad-up" id="up"></div>
+    <div class="dpad-btn dpad-down" id="down"></div>
+    <div class="dpad-btn dpad-left" id="left"></div>
+    <div class="dpad-btn dpad-right" id="right"></div>
   </div>
 </div>
 
 <script>
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+// ==================== 音関連 ====================
+const audioCtx = new (window.AudioContext||window.webkitAudioContext)();
 
-  function playSE(freq = 800, time = 0.1) {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = "square";
-    osc.frequency.value = freq;
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + time);
-    osc.stop(audioCtx.currentTime + time);
-  }
-
-  // ✅ 画面DOMを明示的に取得（ここが今回の致命点）
-  const topScreen = document.getElementById("top");
-  const moodScreen = document.getElementById("mood");
-  const optionScreen = document.getElementById("option");
-  const resultScreen = document.getElementById("result");
-
-  let index = 0;
-  const items = document.querySelectorAll(".gb-item");
-
-  function updateCursor() {
-    items.forEach((item, i) => {
-      item.classList.toggle("active", i === index);
-      item.innerHTML = (i === index ? "▶ " : "　") + item.textContent.replace("▶", "").trim();
-    });
-  }
-
-  document.addEventListener("keydown", (e) => {
-    if (!topScreen.classList.contains("active")) return;
-
-    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
-      playSE(400, 0.05);
-      index = (index + 1) % 2;
-    }
-
-    if (e.key === "Enter") {
-      playSE(900, 0.15);
-      index === 0 ? goMood() : goOption();
-    }
-
-    updateCursor();
-  });
-
-  document.getElementById("btnA").onclick = () => {
-    playSE(900, 0.15);
-    index === 0 ? goMood() : goOption();
-  };
-
-  function goMood() {
-    topScreen.classList.remove("active");
-    moodScreen.classList.add("active");
-  }
-
-  function goOption() {
-    topScreen.classList.remove("active");
-    optionScreen.classList.add("active");
-  }
-
-function selectMood(moodText) {
-  playSE(1100, 0.1);
-  moodScreen.classList.remove("active");
-  resultScreen.classList.add("active");
-
-  document.getElementById("selectedMood").innerText = moodText;
-  document.getElementById("selectedMood").insertAdjacentHTML("afterend", "<p id='gameResult'>読み込み中...</p>");
-
-  // ✅ Railsへ気分を送信して結果取得
-  fetch(`/games/result?mood=${encodeURIComponent(moodText)}`)
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("gameResult").innerText = data.result;
-    })
-    .catch(() => {
-      document.getElementById("gameResult").innerText = "エラーが発生しました";
-    });
+function playSE(freq=600,time=0.1){
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
+  osc.type="square";
+  osc.frequency.value=freq;
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start();
+  gain.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+time);
+  osc.stop(audioCtx.currentTime+time);
 }
 
+// ドラクエ風3音和音BGM
+let bgmStarted=false;
+function startBGM(){
+  if(bgmStarted) return;
+  bgmStarted=true;
 
-  function goTop(sound = false) {
-    if (sound) playSE(500, 0.2);
-    document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
-    topScreen.classList.add("active");
+  const melody =[262,294,330,349,392,349,330,294];
+  const chord2 =[196,220,247,262,294,262,247,220];
+  const bass   =[131,147,165,175,196,175,165,147];
+  let i=0;
+
+  function loop(){
+    [melody, chord2, bass].forEach((line,idx)=>{
+      const osc=audioCtx.createOscillator();
+      const gain=audioCtx.createGain();
+      osc.type="square";
+      osc.frequency.value=line[i%line.length];
+      gain.gain.value= idx===0 ? 0.2 : 0.12;
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime+0.25);
+    });
+    i++;
+    setTimeout(loop,250);
+  }
+  loop();
+}
+
+// ==================== ゲーム制御 ====================
+let scene="top";
+let cursor=0;
+let selectedMood="";
+let resultData=null;
+
+const moods=[
+  "ガンガンいこうぜ",
+  "ばっちりがんばれ",
+  "いのちだいじに",
+  "じゅもんつかうな",
+  "おれにまかせろ"
+];
+
+const game_map={
+  "ガンガンいこうぜ":["モンスターハンター","爽快アクションでストレス発散"],
+  "ばっちりがんばれ":["スプラトゥーン","対戦で実力勝負"],
+  "いのちだいじに":["どうぶつの森","癒しとスローライフ"],
+  "じゅもんつかうな":["ゼルダの伝説","骨太アクション冒険"],
+  "おれにまかせろ":["FF","仲間と戦略バトル"]
+};
+
+function maxCursor(){
+  if(scene==="top") return 2;
+  if(scene==="mood") return 5;
+  return 1;
+}
+
+function draw(){
+  const d=document.getElementById("display");
+  if(scene==="top"){
+    d.innerHTML=`
+    ${cursor===0?"▶":"　"} START<br>
+    ${cursor===1?"▶":"　"} OPTION
+    `;
   }
 
-  updateCursor();
-</script>
+  if(scene==="mood"){
+    d.innerHTML=moods.map((m,i)=>
+      `${cursor===i?"▶":"　"} ${m}`
+    ).join("<br>") + `<br><br>◀ B もどる`;
+  }
 
+  if(scene==="result"){
+    d.innerHTML=`
+    ▶ 結果<br>
+    気分：${selectedMood}<br><br>
+    おすすめ：${resultData[0]}<br>
+    理由：${resultData[1]}<br><br>
+    ◀ B トップへ
+    `;
+  }
+
+  if(scene==="option"){
+    d.innerHTML=`
+    📖 README　 METAPPI作<br><br>
+    気分でゲームをおすすめするアプリです。<br>
+    <br>今後は画像表示やデータベース連携機能を　追加予定です。</br>
+    十字キー：移動<br>
+    A：決定　B：戻る<br><br>
+    ◀ B もどる
+    `;
+  }
+}
+
+function decide(){
+  startBGM();
+  playSE(900);
+
+  if(scene==="top"){
+    scene= cursor===0 ? "mood" : "option";
+    cursor=0;
+  } 
+  else if(scene==="mood"){
+    selectedMood=moods[cursor];
+    resultData=game_map[selectedMood];
+    scene="result";
+  } 
+  else {
+    scene="top";
+    cursor=0;
+  }
+  draw();
+}
+
+function back(){
+  playSE(400);
+  if(scene==="mood" || scene==="option"){
+    scene="top";
+  } else if(scene==="result"){
+    scene="mood";
+  }
+  cursor=0;
+  draw();
+}
+
+// ==================== 操作 ====================
+document.addEventListener("keydown",e=>{
+  startBGM();
+  if(e.key==="ArrowUp"){playSE(300);cursor=(cursor-1+maxCursor())%maxCursor();}
+  if(e.key==="ArrowDown"){playSE(300);cursor=(cursor+1)%maxCursor();}
+  if(e.key==="Enter") decide();
+  if(e.key==="Escape"||e.key==="Backspace") back();
+  draw();
+});
+
+btnA.onclick=decide;
+btnB.onclick=back;
+up.onclick=()=>{playSE(300);cursor=(cursor-1+maxCursor())%maxCursor();draw();}
+down.onclick=()=>{playSE(300);cursor=(cursor+1)%maxCursor();draw();}
+left.onclick=back;
+right.onclick=decide;
+
+draw();
+</script>
 </body>
 </html>

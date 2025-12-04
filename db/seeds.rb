@@ -1,9 +1,7 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+MoodGame.create([
+  { mood: "ガンガン行こうぜ", game_name: "モンスターんハンター", reason: "爽快なアクションでストレス発散できるから" },
+  { mood: "ばっちりがんばれ", game_name: "スプラトゥーン", reason: "対戦で思い切り腕を試せるから" },
+  { mood: "いのちだいじに", game_name: "どうぶつの森", reason: "ゆったり遊べて癒されるから" },
+  { mood: "じゅもんつかうな", game_name: "ゼルダの伝説", reason: "アクション中心でじっくり攻略が必要だから" },
+  { mood: "おれにまかせろ", game_name: "ファイナルファンタジー", reason: "仲間と戦略を立てる楽しさがあるから" }
+])

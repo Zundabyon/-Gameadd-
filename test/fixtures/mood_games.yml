@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mood: MyString
+  game_name: MyString
+  reason: MyText
+
+two:
+  mood: MyString
+  game_name: MyString
+  reason: MyText
