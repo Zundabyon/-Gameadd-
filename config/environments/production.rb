@@ -79,5 +79,8 @@ Rails.application.configure do
 
   # ✅ Render 用ホスト許可（最重要）
   config.hosts << ".onrender.com"
+  config.hosts << "gameadd.onrender.com"
+  config.hosts << "gameadd-1.onrender.com"
   config.hosts << "localhost"
+
 end
