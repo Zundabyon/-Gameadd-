@@ -10,7 +10,6 @@ COPY . .
 
 RUN gem install bundler
 RUN bundle install
-
 # ✅ Renderが見るポートを指定
 ENV PORT=3000
 
