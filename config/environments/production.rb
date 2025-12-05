@@ -80,4 +80,8 @@ Rails.application.configure do
 
   config.hosts << "gameadd.onrender.com"
   #rails8はデフォルトでホスト制限がかかるため、許可するホストを追加する必要がある。
+  config.hosts << "gameadd.onrender.com"
+  config.hosts << "localhost"
+  # config.hosts << "example.com"はデフォルトで設定されているが、必要に応じて他のホストも追加できる。
+  # 詳細はRailsのドキュメントを参照のこと。
 end
