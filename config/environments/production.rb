@@ -57,7 +57,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  config.action_mailer.default_url_options = { host: "gameadd.onrender.com" }
 
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
   # config.action_mailer.smtp_settings = {
@@ -68,8 +68,7 @@ Rails.application.configure do
   #   authentication: :plain
   # }
 
-  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-  # the I18n.default_locale when a translation cannot be found).
+  # Enable locale fallbacks for I18n.
   config.i18n.fallbacks = true
 
   # Do not dump schema after migrations.
@@ -78,10 +77,7 @@ Rails.application.configure do
   # Only use :id for inspections in production.
   config.active_record.attributes_for_inspect = [ :id ]
 
-  config.hosts << "gameadd.onrender.com"
-  #rails8はデフォルトでホスト制限がかかるため、許可するホストを追加する必要がある。
-  config.hosts << "gameadd.onrender.com"
+  # ✅ Render 用ホスト許可（最重要）
+  config.hosts << ".onrender.com"
   config.hosts << "localhost"
-  # config.hosts << "example.com"はデフォルトで設定されているが、必要に応じて他のホストも追加できる。
-  # 詳細はRailsのドキュメントを参照のこと。
 end
