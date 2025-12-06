@@ -47,4 +47,5 @@ Rails.application.configure do
   config.hosts.clear
   config.hosts << ".onrender.com"
   config.hosts << "localhost"
+
 end
