@@ -3,53 +3,59 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # Code is not reloaded between requests.
-  config.enable_reloading = false
+  # In the development environment your application's code is reloaded on every request.
+  config.enable_reloading = true
 
-  # Eager load code on boot for better performance and memory savings.
-  config.eager_load = true
+  # Do not eager load code on boot.
+  config.eager_load = false
 
-  # Full error reports are disabled.
-  config.consider_all_requests_local = false
+  # Show full error reports.
+  config.consider_all_requests_local = true
 
-  # Turn on fragment caching in view templates.
-  config.action_controller.perform_caching = true
+  # Enable server timing
+  config.server_timing = true
 
-  # Cache assets for far-future expiry since they are all digest stamped.
-  config.public_file_server.headers = {
-    "cache-control" => "public, max-age=#{1.year.to_i}"
-  }
+  # Enable/disable caching.
+  if Rails.root.join("tmp/caching-dev.txt").exist?
+    config.action_controller.perform_caching = true
+    config.action_controller.enable_fragment_cache_logging = true
 
-  # Store uploaded files on the local file system.
+    config.cache_store = :memory_store
+    config.public_file_server.headers = {
+      "cache-control" => "public, max-age=#{2.days.to_i}"
+    }
+  else
+    config.action_controller.perform_caching = false
+
+    config.cache_store = :null_store
+  end
+
+  # Store uploaded files on the local file system
   config.active_storage.service = :local
 
-  # Log to STDOUT with the current request id as a default log tag.
-  config.log_tags = [ :request_id ]
-  config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
+  # Print deprecation notices to the Rails logger.
+  config.active_support.deprecation = :log
 
-  # Log level
-  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
+  # Raise exceptions for disallowed deprecations.
+  config.active_support.disallowed_deprecation = :raise
 
-  # Prevent health checks from clogging up the logs.
-  config.silence_healthcheck_path = "/up"
+  # Tell Active Support which deprecation messages to disallow.
+  config.active_support.disallowed_deprecation_warnings = []
 
-  # Don't log any deprecations.
-  config.active_support.report_deprecations = false
+  # Highlight code that triggered database queries in logs.
+  config.active_record.verbose_query_logs = true
 
-  # Enable locale fallbacks for I18n.
-  config.i18n.fallbacks = true
+  # Raises error for missing translations.
+  config.i18n.raise_on_missing_translations = true
 
-  # Do not dump schema after migrations.
-  config.active_record.dump_schema_after_migration = false
+  # Annotate rendered view with file names.
+  config.action_view.annotate_rendered_view_with_filenames = true
 
-  # Only use :id for inspections in production.
-  config.active_record.attributes_for_inspect = [ :id ]
-
-  # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "gameadd.onrender.com" }
+  # Raise error when a before_action's only/except options reference missing actions.
+  config.action_controller.raise_on_missing_callback_actions = true
 
   # ================================
-  # ✅ Render 用ホスト許可（これだけでOK）
+  # ✅ Render 用ホスト許可（ここが本命）
   # ================================
   config.hosts << ".onrender.com"
   config.hosts << "localhost"
