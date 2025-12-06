@@ -1,9 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
-
-  # In the development environment your application's code is reloaded on every request.
+  # Code is reloaded between requests.
   config.enable_reloading = true
 
   # Do not eager load code on boot.
@@ -26,38 +24,27 @@ Rails.application.configure do
     }
   else
     config.action_controller.perform_caching = false
-
     config.cache_store = :null_store
   end
 
-  # Store uploaded files on the local file system
+  # Store uploaded files on the local file system.
   config.active_storage.service = :local
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
-  # Raise exceptions for disallowed deprecations.
+  # Highlight code that triggered deprecations in logs.
   config.active_support.disallowed_deprecation = :raise
 
-  # Tell Active Support which deprecation messages to disallow.
-  config.active_support.disallowed_deprecation_warnings = []
+  # Do not halt on pending migrations.
+  config.active_record.migration_error = :page_load
 
-  # Highlight code that triggered database queries in logs.
-  config.active_record.verbose_query_logs = true
+  # Asset debug mode.
+  config.assets.debug = true
+  config.assets.quiet = true
 
-  # Raises error for missing translations.
-  config.i18n.raise_on_missing_translations = true
-
-  # Annotate rendered view with file names.
-  config.action_view.annotate_rendered_view_with_filenames = true
-
-  # Raise error when a before_action's only/except options reference missing actions.
-  config.action_controller.raise_on_missing_callback_actions = true
-
-  # ================================
-  # ✅ Render 用ホスト許可（ここが本命）
-  # ================================
+  # ✅✅✅ Render 用ホスト許可（ここが本命）
+  config.hosts.clear
   config.hosts << ".onrender.com"
   config.hosts << "localhost"
-
 end
