@@ -14,4 +14,4 @@ RUN bundle install
 ENV PORT=3000
 
 # ✅ ここが最重要：Railsサーバー起動命令
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+CMD ["sh", "-c", "bundle exec rails db:migrate && bundle exec puma -C config/puma.rb"]
