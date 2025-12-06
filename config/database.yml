@@ -1,36 +1,19 @@
-# config/database.yml
-
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: db # Docker Compose サービス名
-  username: postgres
-  password: password
   pool: 5
 
 development:
   <<: *default
-  database: gameadd_development
+  host: db
+  username: postgres
+  password: password
 
 test:
   <<: *default
-  database: gameadd_test
+  host: db
+  username: postgres
+  password: password
 
 production:
-  <<: *default
-  database: gameadd_production
-
-  cache:
-    <<: *default
-    database: app_production_cache
-    migrations_paths: db/cache_migrate
-
-  queue:
-    <<: *default
-    database: app_production_queue
-    migrations_paths: db/queue_migrate
-
-  cable:
-    <<: *default
-    database: app_production_cable
-    migrations_paths: db/cable_migrate
+  url: <%= ENV["DATABASE_URL"] %>
