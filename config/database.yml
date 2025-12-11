@@ -1,29 +1,14 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV['DATABASE_URL'] %>
+  pool: 5
 
 development:
   <<: *default
-  database: gameadd_development
-  username: postgres
-  password: password
-  host: db
 
 test:
   <<: *default
-  database: gameadd_test
-  username: postgres
-  password: password
-  host: db
 
 production:
   <<: *default
-  # DATABASE_URL が設定されていればそれを優先
-  url: <%= ENV['DATABASE_URL'] %>
-  # 以下は optional: DATABASE_URL がない場合に fallback
-  database: gameadd_production
-  username: gameadd_db_user
-  password: <%= ENV['DB_PASSWORD'] %> # もし環境変数で分けたい場合
-  host: dpg-d4ppt1vdiees738srr40-a
-  port: 5432
