@@ -1,17 +1,18 @@
 FROM ruby:3.3
 
+# pg のビルドに必要なもの全部入れる
 RUN apt-get update -qq && apt-get install -y \
     nodejs \
-    npm
+    postgresql-client \
+    libpq-dev \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-COPY . .
-
-RUN gem install bundler
+# bundle install 用
+COPY Gemfile Gemfile.lock ./
 RUN bundle install
-# ✅ Renderが見るポートを指定
-ENV PORT=3000
 
-# ✅ ここが最重要：Railsサーバー起動命令
-CMD ["sh", "-c", "bundle exec rails db:migrate && bundle exec puma -C config/puma.rb"]
+# アプリ全体コピー
+COPY . .

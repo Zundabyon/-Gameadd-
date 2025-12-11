@@ -1,5 +1,3 @@
-# See https://docs.docker.com/engine/reference/builder/#dockerignore-file for more about ignoring files.
-
 # Ignore git directory.
 /.git/
 /.gitignore
@@ -46,6 +44,5 @@
 # Ignore development files
 /.devcontainer
 
-# Ignore Docker-related files
-/.dockerignore
-/Dockerfile*
+# ✓ Dockerfile は ignore しない！（重要）
+# /.dockerignore ← ignore してもOK

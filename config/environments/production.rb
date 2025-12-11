@@ -39,10 +39,6 @@ Rails.application.configure do
   # Do not halt on pending migrations.
   config.active_record.migration_error = :page_load
 
-  # Asset debug mode.
-  config.assets.debug = true
-  config.assets.quiet = true
-
   # ✅✅✅ Render 用ホスト許可（ここが本命）
   config.hosts.clear
   config.hosts << ".onrender.com"

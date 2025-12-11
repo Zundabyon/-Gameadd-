@@ -1,4 +1,4 @@
-class CreateMoodGames < ActiveRecord::Migration[8.1]
+class CreateMoodGames < ActiveRecord::Migration[7.0]
   def change
     create_table :mood_games do |t|
       t.string :mood
