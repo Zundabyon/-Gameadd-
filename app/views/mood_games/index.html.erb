@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Mood games" %>
+
+<h1>Mood games</h1>
+
+<div id="mood_games">
+  <% @mood_games.each do |mood_game| %>
+    <%= render mood_game %>
+    <p>
+      <%= link_to "Show this mood game", mood_game %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New mood game", new_mood_game_path %>

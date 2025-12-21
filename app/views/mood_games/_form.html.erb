@@ -1,0 +1,17 @@
+<%= form_with(model: mood_game) do |form| %>
+  <% if mood_game.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(mood_game.errors.count, "error") %> prohibited this mood_game from being saved:</h2>
+
+      <ul>
+        <% mood_game.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

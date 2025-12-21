@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @mood_game %>
+
+<div>
+  <%= link_to "Edit this mood game", edit_mood_game_path(@mood_game) %> |
+  <%= link_to "Back to mood games", mood_games_path %>
+
+  <%= button_to "Destroy this mood game", @mood_game, method: :delete %>
+</div>
