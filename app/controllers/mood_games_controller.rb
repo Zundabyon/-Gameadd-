@@ -2,9 +2,12 @@ class MoodGamesController < ApplicationController
   before_action :set_mood_game, only: %i[ show edit update destroy ]
 
   # GET /mood_games or /mood_games.json
-  def index
-    @mood_games = MoodGame.all
-  end
+def index
+  @mood_games = MoodGame.all
+  @mood_games_json = @mood_games.as_json(only: [:mood, :game_name, :reason])
+end
+  # ここでページ読み込み時にJSONでデータを取得し、JavaScriptで利用できるようにしています。
+  # これがないと、JavaScript側でデータが取得できず、エラーが発生します。
 
   # GET /mood_games/1 or /mood_games/1.json
   def show
