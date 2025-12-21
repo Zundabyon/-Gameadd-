@@ -105,6 +105,15 @@ body {
 </div>
 
 <script>
+
+// ==================== サーバーからのデータ取得 ====================
+ const moodGamesData = <%= raw @mood_games_json.to_json %>;
+  // game_mapを動的に生成
+  const game_map = {};
+  moodGamesData.forEach(game => {
+    game_map[game.mood] = [game.game_name, game.reason];
+  });
+
 // ==================== 音関連 ====================
 const audioCtx = new (window.AudioContext||window.webkitAudioContext)();
 
@@ -263,6 +272,7 @@ left.onclick=back;
 right.onclick=decide;
 
 draw();
+
 </script>
 </body>
 </html>
